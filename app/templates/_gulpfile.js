@@ -58,7 +58,10 @@ gulp.task( 'compile-me', function(){
 
   return gulp.src('app/css/*.less')
           .pipe( plug.less() )
-          .on('error', errorLog)
+          // .on('error', errorLog)
+          .on('error', function (error) {
+            console.error('' + error);
+          })
           .pipe( gulp.dest('app/css/') );
 
 });

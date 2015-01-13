@@ -13,7 +13,8 @@
 ************************************************/
 var gulp   = require('gulp'),
     chalk  = require('chalk'),
-    del    = require('del'),
+    // del    = require('del'),
+    fs     = require('fs'),
     plug   = require('gulp-load-plugins')({
               scope: ['devDependencies'],
               replaceString: 'gulp-',

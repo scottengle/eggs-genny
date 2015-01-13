@@ -13,7 +13,6 @@
 ************************************************/
 var gulp   = require('gulp'),
     chalk  = require('chalk'),
-    // del    = require('del'),
     fs     = require('fs'),
     plug   = require('gulp-load-plugins')({
               scope: ['devDependencies'],
@@ -191,13 +190,7 @@ gulp.task( 'html-me', function(){
 
 gulp.task( 'clean-me', [ 'css-me', 'js-me' ], function(){
 
-  var dels = 'Cleaned up the following: \n';
-  del( ['tmp/**','tmp'] , function (err, deletedFiles) {
-    deletedFiles.forEach( function( val, index ){
-        dels +=  '  - '+val+'\n';
-    });
-    loggit(dels);
-  });
+  del( ['tmp/**','tmp'] );
 
 });
 
@@ -227,6 +220,25 @@ errorLog = function (er){
             "*****************************************\n";
 
   console.log( chalk.red( log )  );
+},
+del = function(files){
+
+  if( files.isArray ){
+    var str = "Deleted the following files:\n";
+    files.forEach(function(file) {
+      fs.unlink(files, function(err){
+        if(err){ throw err; }
+        str += " - "+file+"\n";
+      });
+    })
+    loggit(str);
+  }else{
+    fs.unlink(files, function(err){
+      if(err){ throw err; }
+      loggit('Deleted '+files+'successfully!');
+    });
+  }
+
 },
 timePlz = function(){
 
